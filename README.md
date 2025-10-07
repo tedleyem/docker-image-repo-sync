@@ -23,15 +23,19 @@ To set up the repository for GitHub CI/CD automation, you will need to configure
 
 ### Required Environment Variables
 
-| Environment Variable       | Description                                         |
-|----------------------------|-----------------------------------------------------|
-| `DOCKER_HUB_URL`           | Docker Hub URL                                      |
-| `DOCKER_REGISTRY`          | Docker Registry                                     |
-| `HARBOR_URL`               | Harbor URL                                          |
-| `HARBOR_REGISTRY`          | Harbor Registry                                     |
-| `HARBOR_USERNAME`          | Harbor Username                                     |
-| `HARBOR_PASSWORD`          | Harbor Password                                     |
-| `PROJECT_NAME`             | Project name                                        |
+| Secrets Variable           | Description                                            |
+|----------------------------|--------------------------------------------------------|
+| `GH_DOCKERHUB_TOKEN`       | Docker Hub Token                                       |
+
+| Environment Variable       | Description                                            |
+|----------------------------|--------------------------------------------------------|
+| `GH_DOCKER_HUB_URL`           | Docker Hub URL                                      |
+| `GH_DOCKER_REGISTRY`          | Docker Registry                                     |
+| `GH_HARBOR_URL`               | Harbor URL                                          |
+| `GH_HARBOR_REGISTRY`          | Harbor Registry                                     |
+| `GH_HARBOR_USERNAME`          | Harbor Username                                     |
+| `GH_HARBOR_PASSWORD`          | Harbor Password                                     |
+| `GH_PROJECT_NAME`             | Harbor Project name                                 |
 
 ### Setup
 
