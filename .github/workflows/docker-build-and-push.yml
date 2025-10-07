@@ -8,7 +8,7 @@ on:
       - main
 
 env:
-  GH_DOCKERHUB_USERNAME: ${{ env.GH_DOCKERHUB_USERNAME-Sync-env }}  # Ensure this is set if needed
+  GH_DOCKERHUB_USERNAME: ${{ env.GH_DOCKERHUB_USERNAME }}  # Ensure this is set if needed
 
 jobs: 
   build-and-deploy:
@@ -21,7 +21,7 @@ jobs:
       # Print environment variables for debugging
       - name: Print environment variables
         run: |
-          echo "GH_DOCKERHUB_USERNAME=${{ env.GH_DOCKERHUB_USERNAME-Sync-env }}"
+          echo "GH_DOCKERHUB_USERNAME=${{ env.GH_DOCKERHUB_USERNAME }}"
           echo "GH_DOCKERHUB_TOKEN=***"  # HIDE actual token for security reasons
           echo "Checking if GitHub secret is accessible"
           if [ -z "${{ secrets.GH_DOCKERHUB_TOKEN }}" ]; then
