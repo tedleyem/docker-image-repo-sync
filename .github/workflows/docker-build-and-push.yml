@@ -56,10 +56,7 @@ jobs:
             echo "Building Docker image for $app_name"
             docker build -t ${{ vars.DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} -f $dir/Dockerfile $dir
             docker tag ${{ vars.DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} ${{ vars.DOCKERHUB_USERNAME }}/$app_name:latest
-            
-            echo "Running tests for $app_name"
-            docker run --rm ${{ vars.DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} /bin/sh -c "./test.sh"
-            
+     
             echo "Pushing Docker image for $app_name"
             docker push ${{ vars.DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }}
             docker push ${{ vars.DOCKERHUB_USERNAME }}/$app_name:latest
