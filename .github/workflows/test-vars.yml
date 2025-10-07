@@ -21,7 +21,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Print and check environment variables for debugging
+      # echo all the stuff 
+      - name: Check environment variables
+        run: |
+          echo "Checking environment variables"
+          echo "GH_DOCKER_HUB_URL is set: ${{ vars.GH_DOCKER_HUB_URL }}"
+          echo "GH_DOCKERHUB_USERNAME is set: ${{ vars.GH_DOCKERHUB_USERNAME }}"
+          echo "GH_DOCKER_REGISTRY is set: ${{ vars.GH_DOCKER_REGISTRY }}"
+          echo "GH_HARBOR_REGISTRY is set: ${{ vars.GH_HARBOR_REGISTRY }}"
+          echo "GH_HARBOR_URL is set: ${{ vars.GH_HARBOR_URL }}"
+          echo "GH_HARBOR_USERNAME is set: ${{ vars.GH_HARBOR_USERNAME }}"
+          echo "GH_PROJECT_NAME is set: ${{ vars.GH_PROJECT_NAME }}"
+
       - name: Check environment variables
         run: |
           echo "Checking environment variables"
