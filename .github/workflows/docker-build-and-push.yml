@@ -1,4 +1,4 @@
-name: Build and Push to Dockerhub 
+name: Build and Push to Dockerhub
 on:
   push:
     branches:
@@ -6,34 +6,40 @@ on:
   pull_request:
     branches:
       - main
-      
-jobs:
+ 
+jobs: 
   build-test-deploy:
     runs-on: ubuntu-latest
     steps:
       # Checkout the repo
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
+
       # Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ env.GH_DOCKERHUB_USERNAME }}
+          password: ${{ secret.GH_DOCKERHUB_TOKEN }}
+
       # Set up Docker Buildx for building multi-platform images
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
       # Iterate over each directory in the apps/ folder and build/push the Docker image
       - name: Build and Push Docker images
         run: |
+          set -e  # Exit the script if any command fails
           for dir in ./apps/*/; do
             app_name=$(basename "$dir")
             echo "Building Docker image for $app_name"
-            docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} -f $dir/Dockerfile $dir
-            docker tag ${{ secrets.DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/$app_name:latest
+            docker build -t ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} -f $dir/Dockerfile $dir
+            docker tag ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:latest
+            
             echo "Running tests for $app_name"
-            docker run --rm ${{ secrets.DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} /bin/sh -c "./test.sh"
+            docker run --rm ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} /bin/sh -c "./test.sh"
+            
             echo "Pushing Docker image for $app_name"
-            docker push ${{ secrets.DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }}
-            docker push ${{ secrets.DOCKERHUB_USERNAME }}/$app_name:latest
+            docker push ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }}
+            docker push ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:latest
           done
