@@ -14,45 +14,82 @@ jobs:
       # Checkout the repo
       - name: Checkout code
         uses: actions/checkout@v3
-      
-      # Print environment variables for debugging
-      - name: Print environment variables
+        
+    # Print and check secrets variables for debugging
+      - name: Check environment variables and secrets
         run: |
-          echo "GH_DOCKERHUB_USERNAME=${{ env.GH_DOCKERHUB_USERNAME }}"
-          echo "GH_DOCKERHUB_TOKEN=***"  # HIDE actual token for security reasons
-          echo "Checking if GitHub secret is accessible"
+          echo "Checking secrets:"
           if [ -z "${{ secrets.GH_DOCKERHUB_TOKEN }}" ]; then
-            echo "DOCKERHUB_TOKEN is not set!"
+            echo "GH_DOCKERHUB_TOKEN is not set!"
             exit 1
           else
-            echo "DOCKERHUB_TOKEN is set"
+            echo "GH_DOCKERHUB_TOKEN is set"
           fi
 
-      # Log in to Docker Hub
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ env.GH_DOCKERHUB_USERNAME }}
-          password: ${{ secrets.GH_DOCKERHUB_TOKEN }}
+          if [ -z "${{ secrets.GH_HARBOR_PASSWORD }}" ]; then
+            echo "GH_HARBOR_PASSWORD secret is not set!"
+            exit 1
+          else
+            echo "GH_HARBOR_PASSWORD secret is set"
+          fi
 
-      # Set up Docker Buildx for building multi-platform images
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      # Iterate over each directory in the apps/ folder and build/push the Docker image
-      - name: Build and Push Docker images
+    # Print and check environment variables and secrets for debugging
+      - name: Check environment variables and secrets
         run: |
-          set -e  # Exit the script if any command fails
-          for dir in ./apps/*/; do
-            app_name=$(basename "$dir")
-            echo "Building Docker image for $app_name"
-            docker build -t ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} -f $dir/Dockerfile $dir
-            docker tag ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:latest
-            
-            echo "Running tests for $app_name"
-            docker run --rm ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }} /bin/sh -c "./test.sh"
-            
-            echo "Pushing Docker image for $app_name"
-            docker push ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:${{ github.sha }}
-            docker push ${{ env.GH_DOCKERHUB_USERNAME }}/$app_name:latest
-          done
+          echo "Checking environment variables:"
+          if [ -z "${{ env.GH_DOCKERHUB_USERNAME }}" ]; then
+            echo "GH_DOCKERHUB_USERNAME is not set!"
+            exit 1
+          else
+            echo "GH_DOCKERHUB_USERNAME is set: ${{ env.GH_DOCKERHUB_USERNAME }}"
+          fi
+
+          if [ -z "${{ env.GH_DOCKER_HUB_URL }}" ]; then
+            echo "GH_DOCKER_HUB_URL is not set!"
+            exit 1
+          else
+            echo "GH_DOCKER_HUB_URL is set: ${{ env.GH_DOCKER_HUB_URL }}"
+          fi
+
+          if [ -z "${{ env.GH_DOCKER_REGISTRY }}" ]; then
+            echo "GH_DOCKER_REGISTRY is not set!"
+            exit 1
+          else
+            echo "GH_DOCKER_REGISTRY is set: ${{ env.GH_DOCKER_REGISTRY }}"
+          fi
+
+          if [ -z "${{ env.GH_HARBOR_PASSWORD }}" ]; then
+            echo "GH_HARBOR_PASSWORD is not set!"
+            exit 1
+          else
+            echo "GH_HARBOR_PASSWORD is set: ***"
+          fi
+
+          if [ -z "${{ env.GH_HARBOR_REGISTRY }}" ]; then
+            echo "GH_HARBOR_REGISTRY is not set!"
+            exit 1
+          else
+            echo "GH_HARBOR_REGISTRY is set: ${{ env.GH_HARBOR_REGISTRY }}"
+          fi
+
+          if [ -z "${{ env.GH_HARBOR_URL }}" ]; then
+            echo "GH_HARBOR_URL is not set!"
+            exit 1
+          else
+            echo "GH_HARBOR_URL is set: ${{ env.GH_HARBOR_URL }}"
+          fi
+
+          if [ -z "${{ env.GH_HARBOR_USERNAME }}" ]; then
+            echo "GH_HARBOR_USERNAME is not set!"
+            exit 1
+          else
+            echo "GH_HARBOR_USERNAME is set: ${{ env.GH_HARBOR_USERNAME }}"
+          fi
+
+          if [ -z "${{ env.GH_PROJECT_NAME }}" ]; then
+            echo "GH_PROJECT_NAME is not set!"
+            exit 1
+          else
+            echo "GH_PROJECT_NAME is set: ${{ env.GH_PROJECT_NAME }}"
+          fi
+        
