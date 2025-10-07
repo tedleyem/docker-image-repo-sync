@@ -4,8 +4,8 @@ on:
     branches:
       - test
 
-env:
-  GH_DOCKERHUB_USERNAME: ${{ env.GH_DOCKERHUB_USERNAME }}  # Ensure this is set if needed
+#env:
+#  GH_DOCKERHUB_USERNAME: ${{ env.GH_DOCKERHUB_USERNAME }}  # Ensure this is set if needed
 
 jobs: 
   build-and-deploy:
