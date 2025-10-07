@@ -5,3 +5,4 @@ apps/short-url/venv/error.log
 apps/quote-generator/venv/
 apps/quote-generator/error.log
 apps/short-url/venv/
+apps/short-url/error.log
