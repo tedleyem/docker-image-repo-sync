@@ -1,0 +1,51 @@
+name: TEST VARIABLES
+on:
+  push:
+    branches:
+      - test
+      
+jobs: 
+  testing-vars-and-secrets:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_HUB_URL: ${{ vars.DOCKER_HUB_URL }}
+      DOCKER_REGISTRY: ${{ vars.DOCKER_REGISTRY }}
+      HARBOR_PASSWORD: ${{ vars.HARBOR_PASSWORD }}
+      HARBOR_REGISTRY: ${{ vars.HARBOR_REGISTRY }}
+      HARBOR_URL: ${{ vars.HARBOR_URL }}
+      HARBOR_USERNAME: ${{ vars.HARBOR_USERNAME }}
+      PROJECT_NAME: ${{ vars.PROJECT_NAME }}
+      
+    steps:
+      # Checkout the repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # echo all the stuff 
+      - name: Check Environment Variables
+        run: |
+          echo "Checking environment variables"
+          echo "DOCKER_HUB_URL is set: ${{ vars.DOCKER_HUB_URL }}"
+          echo "DOCKERHUB_USERNAME is set: ${{ vars.DOCKERHUB_USERNAME }}"
+          echo "DOCKER_REGISTRY is set: ${{ vars.DOCKER_REGISTRY }}"
+          echo "HARBOR_REGISTRY is set: ${{ vars.HARBOR_REGISTRY }}"
+          echo "HARBOR_URL is set: ${{ vars.HARBOR_URL }}"
+          echo "HARBOR_USERNAME is set: ${{ vars.HARBOR_USERNAME }}"
+          echo "PROJECT_NAME is set: ${{ vars.PROJECT_NAME }}"
+
+      # Print and check secrets for debugging
+      - name: Check Secrets Variables 
+        run: |
+          echo "Checking secrets"
+          if [ -z "${{ secrets.GH_DOCKERHUB_TOKEN }}" ]; then
+            echo "GH_DOCKERHUB_TOKEN is not set!"
+            exit 1
+          else
+            echo "GH_DOCKERHUB_TOKEN is set"
+          fi
+          if [ -z "${{ secrets.GH_HARBOR_PASSWORD }}" ]; then
+            echo "GH_HARBOR_PASSWORD secret is not set!"
+            exit 1
+          else
+            echo "GH_HARBOR_PASSWORD secret is set"
+          fi
