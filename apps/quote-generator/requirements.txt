@@ -1,3 +1,3 @@
-Flask-WTF
-WTForms
-requests
+Flask==3.1.2
+Requests==2.32.5
+WTForms==3.2.1

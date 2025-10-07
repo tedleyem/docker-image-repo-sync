@@ -1,9 +1,0 @@
-version: '3.8'
-services:
-  web:
-    container_name: quotes
-    restart: always
-    build: .
-    ports:
-      - "5000:5000"
-

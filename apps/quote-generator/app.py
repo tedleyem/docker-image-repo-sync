@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
-    response = requests.get("https://zenquotes.io/api/random")
+    response = requests.get("https://zenquotes.io/api/random", verify=False)
     if response.status_code == 200:
         data = response.json()
         quote = data[0]['q']

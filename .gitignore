@@ -1,4 +1,6 @@
 venv
 nba_api/__pycache__/
 apps/short-url/venv/
+apps/short-url/venv/error.log
 apps/quote-generator/venv/
+apps/quote-generator/error.log
