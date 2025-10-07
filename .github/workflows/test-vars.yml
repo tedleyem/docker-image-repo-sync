@@ -8,18 +8,71 @@ jobs:
   testing-vars-and-secrets:
     runs-on: ubuntu-latest
     env:
-      GH_DOCKER_HUB_URL: ${{  env.GH_DOCKER_HUB_URL }}
-      GH_DOCKER_REGISTRY: ${{  env.GH_DOCKER_REGISTRY }}
-      GH_HARBOR_PASSWORD: ${{  env.GH_HARBOR_PASSWORD }}
-      GH_HARBOR_REGISTRY: ${{  env.GH_HARBOR_REGISTRY }}
-      GH_HARBOR_URL: ${{  env.GH_HARBOR_URL }}
-      GH_HARBOR_USERNAME: ${{  env.GH_HARBOR_USERNAME }}
-      GH_PROJECT_NAME: ${{  env.GH_PROJECT_NAME }}
+      GH_DOCKER_HUB_URL: ${{ var.GH_DOCKER_HUB_URL }}
+      GH_DOCKER_REGISTRY: ${{ var.GH_DOCKER_REGISTRY }}
+      GH_HARBOR_PASSWORD: ${{ var.GH_HARBOR_PASSWORD }}
+      GH_HARBOR_REGISTRY: ${{ var.GH_HARBOR_REGISTRY }}
+      GH_HARBOR_URL: ${{ var.GH_HARBOR_URL }}
+      GH_HARBOR_USERNAME: ${{ var.GH_HARBOR_USERNAME }}
+      GH_PROJECT_NAME: ${{ var.GH_PROJECT_NAME }}
       
     steps:
       # Checkout the repo
       - name: Checkout code
         uses: actions/checkout@v3
+
+      # Print and check environment variables for debugging
+      - name: Check environment variables
+        run: |
+          echo "Checking environment variables"
+          if [ -z "${{ var.GH_DOCKER_HUB_URL }}" ]; then
+            echo "GH_DOCKER_HUB_URL is not set!"
+            exit 1
+          else
+            echo "GH_DOCKER_HUB_URL is set: ${{ var.GH_DOCKER_HUB_URL }}"
+          fi
+          if [ -z "${{ var.GH_DOCKERHUB_USERNAME }}" ]; then
+            echo "GH_DOCKERHUB_USERNAME is not set!"
+            exit 1
+          else
+            echo "GH_DOCKERHUB_USERNAME is set: ${{ var.GH_DOCKERHUB_USERNAME }}"
+          fi
+          if [ -z "${{ var.GH_DOCKER_REGISTRY }}" ]; then
+            echo "GH_DOCKER_REGISTRY is not set!"
+            exit 1
+          else
+            echo "GH_DOCKER_REGISTRY is set: ${{ var.GH_DOCKER_REGISTRY }}"
+          fi
+          if [ -z "${{ var.GH_HARBOR_PASSWORD }}" ]; then
+            echo "GH_HARBOR_PASSWORD is not set!"
+            exit 1
+          else
+            echo "GH_HARBOR_PASSWORD is set: ***"
+          fi
+          if [ -z "${{ var.GH_HARBOR_REGISTRY }}" ]; then
+            echo "GH_HARBOR_REGISTRY is not set!"
+            exit 1
+          else
+            echo "GH_HARBOR_REGISTRY is set: ${{ var.GH_HARBOR_REGISTRY }}"
+          fi
+          if [ -z "${{ var.GH_HARBOR_URL }}" ]; then
+            echo "GH_HARBOR_URL is not set!"
+            exit 1
+          else
+            echo "GH_HARBOR_URL is set: ${{ var.GH_HARBOR_URL }}"
+          fi
+          if [ -z "${{ var.GH_HARBOR_USERNAME }}" ]; then
+            echo "GH_HARBOR_USERNAME is not set!"
+            exit 1
+          else
+            echo "GH_HARBOR_USERNAME is set: ${{ var.GH_HARBOR_USERNAME }}"
+          fi
+          if [ -z "${{ var.GH_PROJECT_NAME }}" ]; then
+            echo "GH_PROJECT_NAME is not set!"
+            exit 1
+          else
+            echo "GH_PROJECT_NAME is set: ${{ var.GH_PROJECT_NAME }}"
+          fi
 
       # Print and check secrets for debugging
       - name: Check secrets variables 
@@ -36,57 +89,4 @@ jobs:
             exit 1
           else
             echo "GH_HARBOR_PASSWORD secret is set"
-          fi
-
-      # Print and check environment variables for debugging
-      - name: Check environment variables
-        run: |
-          echo "Checking environment variables"
-          if [ -z "${{ env.GH_DOCKERHUB_USERNAME }}" ]; then
-            echo "GH_DOCKERHUB_USERNAME is not set!"
-            exit 1
-          else
-            echo "GH_DOCKERHUB_USERNAME is set: ${{ env.GH_DOCKERHUB_USERNAME }}"
-          fi
-          if [ -z "${{ env.GH_DOCKER_HUB_URL }}" ]; then
-            echo "GH_DOCKER_HUB_URL is not set!"
-            exit 1
-          else
-            echo "GH_DOCKER_HUB_URL is set: ${{ env.GH_DOCKER_HUB_URL }}"
-          fi
-          if [ -z "${{ env.GH_DOCKER_REGISTRY }}" ]; then
-            echo "GH_DOCKER_REGISTRY is not set!"
-            exit 1
-          else
-            echo "GH_DOCKER_REGISTRY is set: ${{ env.GH_DOCKER_REGISTRY }}"
-          fi
-          if [ -z "${{ env.GH_HARBOR_PASSWORD }}" ]; then
-            echo "GH_HARBOR_PASSWORD is not set!"
-            exit 1
-          else
-            echo "GH_HARBOR_PASSWORD is set: ***"
-          fi
-          if [ -z "${{ env.GH_HARBOR_REGISTRY }}" ]; then
-            echo "GH_HARBOR_REGISTRY is not set!"
-            exit 1
-          else
-            echo "GH_HARBOR_REGISTRY is set: ${{ env.GH_HARBOR_REGISTRY }}"
-          fi
-          if [ -z "${{ env.GH_HARBOR_URL }}" ]; then
-            echo "GH_HARBOR_URL is not set!"
-            exit 1
-          else
-            echo "GH_HARBOR_URL is set: ${{ env.GH_HARBOR_URL }}"
-          fi
-          if [ -z "${{ env.GH_HARBOR_USERNAME }}" ]; then
-            echo "GH_HARBOR_USERNAME is not set!"
-            exit 1
-          else
-            echo "GH_HARBOR_USERNAME is set: ${{ env.GH_HARBOR_USERNAME }}"
-          fi
-          if [ -z "${{ env.GH_PROJECT_NAME }}" ]; then
-            echo "GH_PROJECT_NAME is not set!"
-            exit 1
-          else
-            echo "GH_PROJECT_NAME is set: ${{ env.GH_PROJECT_NAME }}"
           fi
