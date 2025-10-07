@@ -1,4 +1,4 @@
-#!/home/ted/projects/python-dojo/pyshort/venv/bin/python
+#!/Users/meralust/projects/tme/docker-image-repo-sync/apps/short-url/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
