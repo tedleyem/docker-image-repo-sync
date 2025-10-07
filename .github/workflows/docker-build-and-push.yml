@@ -20,7 +20,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ env.GH_DOCKERHUB_USERNAME }}
-          password: ${{ secret.GH_DOCKERHUB_TOKEN }}
+          password: ${{ secrets.GH_DOCKERHUB_TOKEN }}
 
       # Set up Docker Buildx for building multi-platform images
       - name: Set up Docker Buildx
