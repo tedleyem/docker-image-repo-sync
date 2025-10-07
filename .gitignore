@@ -1,4 +1,4 @@
 venv
 nba_api/__pycache__/
-apps/*/venv
-apps/short-url/venv/pyvenv.cfg
+apps/short-url/venv/
+apps/quote-generator/venv/
