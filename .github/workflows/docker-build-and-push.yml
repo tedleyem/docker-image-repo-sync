@@ -28,7 +28,6 @@ jobs:
       - name: Print environment variables
         run: |
           echo "DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}"
-          echo "DOCKERHUB_TOKEN=***"  # HIDE actual token for security reasons
           echo "Checking if GitHub secret is accessible"
           if [ -z "${{ secrets.GH_DOCKERHUB_TOKEN }}" ]; then
             echo "secrets.DOCKERHUB_TOKEN is not set!"
