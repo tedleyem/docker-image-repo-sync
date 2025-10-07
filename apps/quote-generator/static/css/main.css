@@ -1,0 +1,47 @@
+
+/**
+ * @file
+ * Main stylesheet file.
+ */
+
+
+/*****************************************************************************
+ * Main elements
+ ****************************************************************************/
+ html {
+  overflow-y: scroll;
+}
+a {
+  cursor: pointer;
+}
+::selection {
+  background: #555;
+  color: #FFF;
+}
+::-moz-selection {
+  background: #555;
+  color: #FFF;
+}
+::-webkit-selection {
+  background: #555;
+  color: #FFF;
+}
+/* Main elements end */
+/* Modify the background colors */
+.custom-gray {
+  background-color: #2d2e32;
+}
+.custom-green {
+  background-color: #4dba87;
+}
+
+/*****************************************************************************
+ * Various other styles
+ ****************************************************************************/
+
+.copyleft {
+      display:inline-block;
+        transform: rotate(180deg);
+
+}
+/* Various other styles end */
