@@ -1,20 +1,21 @@
 # Docker Image Repo Sync 
-# This will check the latst docker image tags in dockerhub, then pull and 
-# sync them to Harbor
+# This will check the last 5 docker image tags in dockerhub, then pull and 
+# sync them to a private Harbor registry
 import requests
 import subprocess
-
+import os
 # Docker Registry Credentials
-DOCKER_HUB_URL = "https://hub.docker.com/v2/repositories/library"
-DOCKER_REGISTRY = "docker.io"
-HARBOR_URL = "http://bigharborregistry.com/api/v2.0/projects"
-HARBOR_REGISTRY = "bigharborregistry.com"
-HARBOR_USERNAME = "automation"
-HARBOR_PASSWORD = "RoBoTaCcOuNt16DiGiTpAsSwOrd"
-PROJECT_NAME = "library"
+DOCKER_HUB_URL = os.getenv("GH_DOCKER_HUB_URL")
+DOCKER_REGISTRY = os.getenv("GH_DOCKER_REGISTRY")
+HARBOR_URL = os.getenv("GH_HARBOR_URL")
+HARBOR_REGISTRY = os.getenv("GH_HARBOR_REGISTRY")
+HARBOR_USERNAME = os.getenv("GH_HARBOR_USERNAME")
+HARBOR_PASSWORD = os.getenv("GH_HARBOR_PASSWORD")
+PROJECT_NAME = os.getenv("GH_PROJECT_NAME")
 
 # Disable SSL verification (use at your own risk)
 VERIFY_SSL = False
+# Images to sync to private repo 
 IMAGE_NAMES = [
     "python",
     "nginx",
@@ -23,7 +24,7 @@ IMAGE_NAMES = [
 ]
 
 def run_command(cmd):
-    """Run a shell command and print output."""
+    """Run a shell command and print output for visibility purposes"""
     print(f"Running: {cmd}")
     process = subprocess.run(cmd, shell=True, capture_output=True, text=True)
     if process.returncode != 0:
